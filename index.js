@@ -1,9 +1,16 @@
 //map object
 var map1 = document.getElementById("map");
+//limit map bounds
+var corner1 = L.latLng(7, 40),
+    corner2 = L.latLng(-5, 35),
+    bounds = L.latLngBounds(corner1, corner2);
 var map = L.map(map1, {
     center: [0.000, 38.000],
     zoom: 6,
     scrollWheelZoom: true,
+    maxBounds: bounds,
+    maxBoundsViscosity: 1.0
+
 
 });
 //base map
@@ -33,7 +40,10 @@ for (d in data) {
         lng: data[d].address.coord[0]
     });
     var date, otherinfo;
-    otherinfo = `<p style="font-weight: bold;">${data[d].name}</p> <p style="font-style: italic;">${data[d].cuisine} cuisine </p> <p><b>Street</b>: ${data[d].address.street}</p>`
+    var name = `<span style="font-weight: bold;">${data[d].name}</span>`;
+    var cuisine = `<br><span style="font-style: italic;">${data[d].cuisine} cuisine </span>`;
+    var street = `<br><b>Street</b>: ${data[d].address.street}`;
+    otherinfo = name + cuisine + street;
 
     for (t = 0; t < data[d].grades.length; t++) {
         date = "<br><span style='font-weight: bold'>Date: </span>" + data[d].grades[t].date.$date;
